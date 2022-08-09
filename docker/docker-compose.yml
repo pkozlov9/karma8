@@ -1,0 +1,42 @@
+version: '3.2'
+
+services:
+  server:
+    container_name: server
+    build:
+      context: server
+    networks:
+      static-network:
+        ipv4_address: 10.10.0.10
+    ports:
+      - '80'
+    volumes:
+#      - '../../karma8_server:/'
+      - '../:/var/www'
+    depends_on:
+      - db
+    links:
+      - db
+    restart: always
+  db:
+    container_name: db
+    build:
+      context: db
+      dockerfile: Dockerfile
+    networks:
+      static-network:
+        ipv4_address: 10.10.0.20
+    ports:
+      - '3306'
+    volumes:
+      #      - '../../karma8_db:/'
+      - './db/data:/var/lib/mysql'
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+
+networks:
+  static-network:
+    ipam:
+      config:
+        - subnet: 10.10.0.0/16

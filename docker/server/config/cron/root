@@ -1,0 +1,2 @@
+* * * * * /usr/local/bin/php /var/www/app/CronSendEmail.php >> /var/log/cron_send_email.log 2>&1
+* * * * * /usr/local/bin/php /var/www/app/CronCheckEmail.php >> /var/log/cron_check_email.log 2>&1
